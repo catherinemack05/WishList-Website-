@@ -1,8 +1,8 @@
 let seeding;
 async function ensureSeed(db){
- if(!seeding)seeding=(async()=>{if(await db.prepare('SELECT version FROM catalog_seed WHERE version = ?').bind('catalog-1260-v1').first())return;
- for(let i=0;i<SEED.length;i+=40)await db.batch(SEED.slice(i,i+40).map(row=>db.prepare('INSERT OR IGNORE INTO products (id,brand,name,category,ages,price,him,her,edits,search_text,rank,data) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)').bind(...row)));
- await db.prepare('INSERT OR IGNORE INTO catalog_seed(version) VALUES (?)').bind('catalog-1260-v1').run();})();
+ if(!seeding)seeding=(async()=>{if(await db.prepare('SELECT version FROM catalog_seed WHERE version = ?').bind(SEED_VERSION).first())return;
+ for(let i=0;i<SEED.length;i+=40)await db.batch(SEED.slice(i,i+40).map(row=>db.prepare('INSERT INTO products (id,brand,name,category,ages,price,him,her,edits,search_text,rank,data) VALUES (?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET rank=excluded.rank, data=excluded.data').bind(...row)));
+ await db.prepare('INSERT OR IGNORE INTO catalog_seed(version) VALUES (?)').bind(SEED_VERSION).run();})();
  try{await seeding;}catch(e){seeding=null;throw e;}
 }
 const json=(value,status=200)=>Response.json(value,{status,headers:{'Cache-Control':'no-store'}});

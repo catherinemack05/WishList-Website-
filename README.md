@@ -14,3 +14,12 @@ Existing saved-list item IDs are retained for compatibility; the original generi
 The catalog now has 1,042 real product listings (1,000 added), including editorial For him and For her collections with overlapping unisex items. The initial 42 entries keep their IDs so existing wishlists are preserved. Catalog imports use unique official product URLs, available variants, product photography, and starting prices checked November 12, 2026. Different product listings may include distinct colors or editions; size variants within a listing are not counted as extra products. Free samples, gift cards, replacement parts, reservations, and zero-priced entries are excluded.
 
 Discovery renders 48 products at a time, with a Show more control, combined recipient/age/interest/budget/brand filtering, and sorting. New catalog images load from brand CDNs; the original 42 optimized photos remain bundled. New imports are curated brand catalog picks, not individually ranked viral products.
+
+## Public trend research and adult edit
+November 12, 2026 update: 1,282 products, including 240 additional official product listings from Cécred, P.F. Candle Co., Intelligent Change, AeroPress, KINTO, The Woobles, Our Place, and FIFINE. Existing product indices are retained.
+
+The browsing age labels are Kids 6–12, Teens 13–19, and Adults 20+. These are editorial browse groupings, not manufacturer safety ratings. Product pages tell visitors to confirm age guidance with the retailer.
+
+Trend collections match product names/categories to public topic-level signals from [TikTok Next 2026](https://ads.tiktok.com/business/en-US/next), [Google Holiday 100](https://blog.google/products-and-platforms/products/shopping/holiday-100-gift-guide-2026/), and [Circana's consumer wellbeing research](https://www.circana.com/post/consumer-wellness-trends-insights-from-circana-s-wellbeing-report). Counts, periods, source links, editorial inference, and ranking methodology are disclosed on the homepage. These sources do not provide a dataset specifically for all people aged 20+, and the adult collection does not claim one. No private TikTok account analytics, live popularity feed, tracking, or item-level sales/like counts are used.
+
+The trend-informed sort is an editorial ordering based on matching collection themes and highlighting new curated products. Inline SVG doodles and CSS movement respect prefers-reduced-motion.

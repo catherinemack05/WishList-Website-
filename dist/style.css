@@ -31,3 +31,9 @@ h2 em{font:inherit;color:inherit}.section-heading p,.recipient-section>p,.trend-
 
 /* Matching full pink labels on the hero. */
 .floating-label.top-label{background:#ffe3ef;border-radius:30px;padding:10px 18px;font-size:10px;line-height:1.5;transform:none;max-width:100%;z-index:5}
+
+/* Consistent title capitalization and subtle hero spacing adjustments. */
+h1,h2,h3,.recipient-title,.trend-title,.floating-label,header nav button,.list-tabs button{text-transform:capitalize}
+.floating-label.top-label{top:8px}
+.doodle-gift{bottom:-52px}
+@media(max-width:650px){.floating-label.top-label{top:-7px}.doodle-gift{bottom:-45px}}

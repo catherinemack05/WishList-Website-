@@ -1,0 +1,8 @@
+import fs from 'node:fs';import {spawnSync} from 'node:child_process';import http from 'node:http';
+const database=process.env.WISHD_TEST_DB||'/private/tmp/wishd-preview.sqlite';
+const sql=`import sqlite3,json,sys\nc=sqlite3.connect(sys.argv[1]);c.row_factory=sqlite3.Row\nqueries=json.load(sys.stdin);out=[]\nfor q in queries:\n r=c.execute(q['sql'],q['args']);out.append({'results':[dict(x) for x in r.fetchall()]})\nc.commit();print(json.dumps(out))`;
+function execute(queries){const r=spawnSync('/usr/bin/python3',['-c',sql,database],{input:JSON.stringify(queries),encoding:'utf8',maxBuffer:20*1024*1024});if(r.status)throw new Error(r.stderr);return JSON.parse(r.stdout);}
+if(!fs.existsSync(database)){const schema=fs.readFileSync('drizzle/0000_catalog.sql','utf8').split('--> statement-breakpoint').map(sql=>({sql:sql.trim(),args:[]})).filter(q=>q.sql);execute(schema);}
+const db={prepare(sql){return {sql,args:[],bind(...args){this.args=args;return this;},async first(){return execute([this])[0].results[0]||null;},async all(){return execute([this])[0];},async run(){return execute([this])[0];}};},async batch(q){return execute(q);}};
+const source=fs.readFileSync('dist/server/index.js','utf8');const worker=await import('data:text/javascript;base64,'+Buffer.from(source).toString('base64'));
+const server=http.createServer(async(req,res)=>{const r=await worker.default.fetch(new Request('http://localhost:3013'+req.url,{method:req.method}),{DB:db});res.writeHead(r.status,Object.fromEntries(r.headers));res.end(Buffer.from(await r.arrayBuffer()));});server.listen(3013,()=>console.log('WISHD preview http://localhost:3013'));

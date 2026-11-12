@@ -31,3 +31,10 @@ The public brand is WISHD, with a CSS halo above the capital I. The URL remains 
 The review removed 22 alcohol-themed, smoking-themed, or accessory-part listings. Removed IDs are not reassigned: catalog records now include explicit stable IDs, product lookup uses an ID map, and saved lists retain valid products. Every published product has an HTTPS official retailer URL, displayed as a prominent Buy at button at the top of its detail panel.
 
 Homepage text uses responsive stacking at tablet widths, visible overflow for copy, readable spacing, and consistent full-control selection highlights.
+
+## Database catalog (November 12, 2026)
+The site now uses a Cloudflare Worker and D1 (`DB`) instead of sending the entire catalog to the browser. `/api/products` performs bounded, parameterized filtering and sorting and returns at most 48 products per page. `/api/catalog` supplies counts and filter choices. Saved product IDs are fetched separately, preserving previous browser-local wishlists; saved product snapshots support later visits.
+
+Source UI is in `web/`, server code in `worker/index.js`, and schema-only migrations in `drizzle/`. Run `node scripts/build.mjs` to generate the deployable Worker, including current static assets and the reviewed starter dataset. The initial dataset is imported idempotently in bounded batches outside schema migrations. There is no public product-write endpoint. Future large imports should use an authorized server-side data pipeline rather than embedding 100,000 seed rows in the Worker. Live prices are not automatically synchronized.
+
+Verified pagination, combined filters, price order, empty search, escaped search wildcards, and saved-ID lookup through the HTTP API. An isolated SQLite test database with 100,000 synthetic rows verified a 48-item final page (about 2 ms locally); this is a local query test, not a production concurrency or Cloudflare quota guarantee. Production still contains 1,260 genuine listings, with no synthetic duplicates.

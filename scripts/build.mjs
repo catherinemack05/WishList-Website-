@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
+const app=fs.readFileSync('web/app.js','utf8');
+const editSource=app.slice(app.indexOf('function editKeys('),app.indexOf('products.forEach'));
+const context={};vm.createContext(context);vm.runInContext(editSource+';this.keys=editKeys;',context);
+const rows=JSON.parse(fs.readFileSync('web/catalog.json','utf8')).map(p=>({...p,editKeys:context.keys(p)}));
+rows.sort((a,b)=>(b.editKeys.length+(b.id>=1062?3:0)+(['Cécred','FIFINE'].includes(b.brand)?2:0))-(a.editKeys.length+(a.id>=1062?3:0)+(['Cécred','FIFINE'].includes(a.brand)?2:0)));
+const groups=Object.groupBy(rows,p=>p.brand);const ordered=[];for(let i=0;ordered.length<rows.length;i++)for(const g of Object.values(groups))if(g[i])ordered.push(g[i]);
+const seed=ordered.map((p,rank)=>[p.id,p.brand,p.name,p.category,p.ages,p.price,+p.recipients.includes('him'),+p.recipients.includes('her'),p.editKeys.join(' '),(p.name+' '+p.brand+' '+p.category).toLowerCase(),rank,JSON.stringify(p)]);
+const assets={};function visit(dir){for(const f of fs.readdirSync(dir,{withFileTypes:true})){const path=dir+'/'+f.name;if(f.isDirectory())visit(path);else if(!['catalog.json'].includes(f.name))assets['/'+path.slice(4)]={body:fs.readFileSync(path).toString('base64'),type:({'html':'text/html; charset=utf-8','css':'text/css','js':'text/javascript','jpg':'image/jpeg','png':'image/png','svg':'image/svg+xml'})[f.name.split('.').at(-1)]||'application/octet-stream'};}}visit('web');
+fs.rmSync('dist',{recursive:true,force:true});fs.mkdirSync('dist/server',{recursive:true});fs.mkdirSync('dist/.openai',{recursive:true});
+fs.writeFileSync('dist/server/index.js','const ASSETS='+JSON.stringify(assets)+';\nconst SEED='+JSON.stringify(seed)+';\n'+fs.readFileSync('worker/index.js','utf8'));
+fs.copyFileSync('.openai/hosting.json','dist/.openai/hosting.json');console.log(`Built database catalog with ${rows.length} products; browser pages capped at 48.`);

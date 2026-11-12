@@ -1,4 +1,4 @@
-# WishList
+# WISHD
 A responsive white-and-pink gift discovery website with 42 real products, matching official product photography, exact product links, age/interest/budget filters, occasion lists, browser persistence, and list exports.
 
 Serve `dist` with any static server: `python3 -m http.server 3013 --directory dist`.
@@ -23,3 +23,11 @@ The browsing age labels are Kids 6–12, Teens 13–19, and Adults 20+. These ar
 Trend collections match product names/categories to public topic-level signals from [TikTok Next 2026](https://ads.tiktok.com/business/en-US/next), [Google Holiday 100](https://blog.google/products-and-platforms/products/shopping/holiday-100-gift-guide-2026/), and [Circana's consumer wellbeing research](https://www.circana.com/post/consumer-wellness-trends-insights-from-circana-s-wellbeing-report). Counts, periods, source links, editorial inference, and ranking methodology are disclosed on the homepage. These sources do not provide a dataset specifically for all people aged 20+, and the adult collection does not claim one. No private TikTok account analytics, live popularity feed, tracking, or item-level sales/like counts are used.
 
 The trend-informed sort is an editorial ordering based on matching collection themes and highlighting new curated products. Inline SVG doodles and CSS movement respect prefers-reduced-motion.
+
+
+## WISHD cleanup
+The public brand is WISHD, with a CSS halo above the capital I. The URL remains unchanged. Header navigation and recipient cards open fresh matching collections at #for-him and #for-her. Explicit men’s and women’s product names take precedence; beauty is curated into For her, unisex gifts may appear in both, and the general kids catalog remains available through Everyone and the age filter.
+
+The review removed 22 alcohol-themed, smoking-themed, or accessory-part listings. Removed IDs are not reassigned: catalog records now include explicit stable IDs, product lookup uses an ID map, and saved lists retain valid products. Every published product has an HTTPS official retailer URL, displayed as a prominent Buy at button at the top of its detail panel.
+
+Homepage text uses responsive stacking at tablet widths, visible overflow for copy, readable spacing, and consistent full-control selection highlights.

@@ -2,3 +2,6 @@
 
 /* White and rose palette, with product photography shown in full. */
 .hero{background:linear-gradient(125deg,#fff 48%,#fff7fb);border-radius:0 0 24px 24px}.product-image img{object-fit:contain;padding:24px;mix-blend-mode:multiply}.polaroid img{object-fit:contain;padding:12px;background:#fff6fa}.p1 img{background:#fff3f8}.catalog-note{font-size:10px;color:var(--muted);line-height:1.8;margin-top:17px}.catalog-note a{text-decoration:underline;text-underline-offset:3px}.badge{max-width:calc(100% - 59px);line-height:1.4}.bottom-banner{background:#fff0f7}.categories button.selected{background:var(--orange);border-color:var(--orange)}.detail-image{object-fit:contain;background:#fff4f9;padding:15px}.end-note>span{color:var(--orange)}
+
+/* A little angel halo replaces the dot over the i in list. */
+.logo .halo-i{position:relative;display:inline-block;font:inherit}.logo .halo-i::after{content:"";position:absolute;left:50%;top:.17em;width:.43em;height:.13em;border:.055em solid var(--orange);border-radius:50%;transform:translateX(-50%) rotate(-12deg);box-sizing:content-box}
